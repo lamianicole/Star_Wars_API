@@ -12,6 +12,9 @@ const outputElement = document.getElementById("output-wrapper") as HTMLDivElemen
 const filmElement = document.getElementById("api-films") as HTMLAnchorElement;
 const planetElement = document.getElementById("api-planets") as HTMLAnchorElement;
 const personElement = document.getElementById("api-people") as HTMLAnchorElement;
+const inputSearchbar = document.getElementById("searchInput") as HTMLInputElement;
+console.log(inputSearchbar);
+
 
 // EventListener ansprechen Kategorie Filme/Callbackfunction
 filmElement?.addEventListener("click", async () => {
@@ -108,3 +111,60 @@ async function fetchHomeworld(url: string): Promise<string> {
   
   return responseData.name
 } 
+
+// function searchbar
+inputSearchbar?.addEventListener("input", async () => {
+  const query = inputSearchbar.value.toLowerCase();
+  if (!query) {
+    outputElement.innerHTML = ""; // Clear the results if the search bar is empty
+    return;
+  }
+
+  try {
+    // Fetch Films
+    const filmResponse: Response = await fetch(FILM_ROUTE);
+    const filmData: { results: IFilmResult[] } = await filmResponse.json();
+    const filteredFilms = filmData.results.filter((film: IFilmResult) =>
+      film.title.toLowerCase().includes(query)
+    );
+
+    // Fetch Planets
+    const planetResponse: Response = await fetch(PLANET_ROUTE);
+    const planetData: { results: IPlanetResult[] } = await planetResponse.json();
+    const filteredPlanets = planetData.results.filter((planet: IPlanetResult) =>
+      planet.name.toLowerCase().includes(query)
+    );
+
+    // Fetch People
+    const personResponse: Response = await fetch(PERSON_ROUTE);
+    const personData: { results: IPersonResult[] } = await personResponse.json();
+    const filteredPeople = personData.results.filter((person: IPersonResult) =>
+      person.name.toLowerCase().includes(query)
+    );
+
+    // Display the results
+    outputElement.innerHTML = "";
+    filteredFilms.forEach((film: IFilmResult) => {
+      const filmDiv = document.createElement("div") as HTMLDivElement;
+      filmDiv.className = "card";
+      filmDiv.innerHTML = displayFilm(film);
+      outputElement.appendChild(filmDiv);
+    });
+    filteredPlanets.forEach((planet: IPlanetResult) => {
+      const planetDiv = document.createElement("div") as HTMLDivElement;
+      planetDiv.className = "card";
+      planetDiv.innerHTML = displayPlanet(planet);
+      outputElement.appendChild(planetDiv);
+    });
+    filteredPeople.forEach(async (person: IPersonResult) => {
+      const personDiv = document.createElement("div") as HTMLDivElement;
+      personDiv.className = "card";
+      personDiv.innerHTML = await displayPerson(person);
+      outputElement.appendChild(personDiv);
+    });
+
+  } catch (error) {
+    console.error("Error: process failed", error);
+  }
+});
+
