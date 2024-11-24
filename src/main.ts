@@ -71,24 +71,6 @@ function displayPlanet(planet: IPlanetResult): string {
   return resultAsString
 }
 
-// hier Platzhalter residents dient nur als Art Hülle, um mit der function zu arbeiten (showResidents) => planet.residents
-// async function showResidents(residents: string[]): Promise<string> {
-   // erst hier beim Funktionsaufruf wird x mit Inhalt befüllt (planet.residents)
-  // showResidents(planet.residents);
-//   residents.forEach(async(resident) => {
-//     console.log(resident);
-//     try {
-//       const response: Response = await fetch(resident) 
-//       const data = await response.json()
-//       console.log(data);
-//       return data.name
-//     }
-//     catch(error) {
-//     console.error(error);
-//     }
-//   })
-// }
-
 // EventListener ansprechen Kategorie People/Callbackfunction
 personElement?.addEventListener("click", async () => {
   try {
