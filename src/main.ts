@@ -1,7 +1,7 @@
 import './style.css'
-import { IFilm, IFilmResult } from './interfaces/IFilm';
-import { IPerson, IPersonResult } from './interfaces/IPerson'
-import { IPlanet, IPlanetResult } from './interfaces/IPlanet'
+import { IFilmResult } from './interfaces/IFilm';
+import { IPersonResult } from './interfaces/IPerson'
+import { IPlanetResult } from './interfaces/IPlanet'
 
 const BASE_URL = "https://swapi.dev/api/"
 const FILM_ROUTE = `${BASE_URL}/films/`
