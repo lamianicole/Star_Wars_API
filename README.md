@@ -22,3 +22,6 @@ This project is created with:
 
 ## Insight
 ![screenshot](./src/assets/img/Star_Wars_API.png)
+
+## Link 
+https://star-wars-api-1124.netlify.app/
